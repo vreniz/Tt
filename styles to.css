@@ -1,0 +1,1330 @@
+/* =========================================
+   SHATTERED RIFFS — styles.css
+   Rock band landing page stylesheet.
+
+   Structure:
+     1.  CSS Variables
+     2.  Reset
+     3.  Utility
+     4.  Header / Navbar
+     5.  Hero
+     6.  General Sections & Tables
+     7.  About
+     8.  Discography (flip cards)
+     9.  Gallery
+     10. Video
+     11. Merch / CTA
+     12. Sponsors
+     13. Footer
+     14. Responsive — Tablet (≤1024px)
+     15. Responsive — Mobile (≤735px)
+   ========================================= */
+
+
+/* =========================================
+   1. CSS VARIABLES
+   Central design tokens used throughout
+   the stylesheet. Change a value here and
+   it updates everywhere automatically.
+   ========================================= */
+:root {
+    --bg: #080808;                          /* Page background — near black */
+    --surface: #111111;                     /* Card / panel background */
+    --border: rgba(232, 0, 61, 0.2);        /* Subtle red-tinted border */
+    --red: #e8003d;                         /* Brand accent colour */
+    --orange: #ff5500;                      /* Secondary accent (reserved) */
+    --text: #f0ede8;                        /* Primary text — warm white */
+    --muted: #6a6560;                       /* Secondary / subdued text */
+    --cyan: #00c8a0;                        /* Highlight colour for labels */
+    --shadow: 0 8px 40px rgba(0, 0, 0, 0.8);
+
+    --font-display: 'Barlow Condensed', sans-serif;  /* Headings */
+    --font-body: 'DM Mono', monospace;               /* Body / UI text */
+
+    --radius: 4px;
+    --nav-h: 64px;       /* Fixed navbar height used by sticky positioning */
+    --max-w: 1120px;     /* Maximum content width */
+    --transition: 0.22s ease;
+}
+
+
+/* =========================================
+   2. RESET
+   Removes browser default margin/padding
+   and enforces border-box sizing so padding
+   and border are included in element widths.
+   ========================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Enables smooth anchor scrolling */
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevents horizontal scroll from absolute elements */
+}
+
+/* Grain texture overlay sits above all content without blocking clicks */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+}
+
+img,
+iframe {
+    max-width: 100%;
+    display: block; /* Removes inline image gap at the bottom */
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+
+/* =========================================
+   3. UTILITY
+   ========================================= */
+
+/* Visually hides an element but keeps it
+   readable by screen readers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* =========================================
+   4. HEADER / NAVBAR
+   Sticky bar that stays at the top of the
+   viewport while the user scrolls.
+   ========================================= */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: rgba(8, 8, 8, 0.96);
+    backdrop-filter: blur(10px);      /* Frosted-glass effect on content below */
+    border-bottom: 1px solid var(--border);
+    height: var(--nav-h);
+}
+
+/* Animated red gradient line that pulses along the bottom of the header */
+.site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    animation: scanline 3s ease-in-out infinite;
+}
+
+/* Scanline pulse keyframes */
+@keyframes scanline {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 100%;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* Hidden checkbox — the CSS-only burger menu trick.
+   The <label for="menu-toggle"> acts as the clickable
+   hamburger icon; checking/unchecking this drives
+   the sibling selector .menu-toggle:checked ~ .nav-links */
+.menu-toggle {
+    display: none;
+}
+
+/* Brand / logo text */
+.brand {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);          /* "RIFFS" part in brand red */
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Brand icon — the logo image next to the band name */
+.brand-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+/* "SHATTERED" part in white */
+.brand span {
+    color: var(--text);
+}
+
+/* Nav links — horizontal on desktop */
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-left: auto; /* Pushes links to the right side of the navbar */
+    color: var(--muted);
+}
+
+.nav-links a {
+    font-size: 0.82rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--red);
+}
+
+/* Primary CTA button and general .btn share the same base style */
+.nav-cta, .btn,
+.ticket-form button {
+    background: var(--red);
+    color: #fff;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: var(--radius);
+    padding: 11px 22px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(232, 0, 61, 0.35);
+    transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
+    display: inline-block;
+    line-height: 1;
+}
+
+.nav-cta:hover,
+.btn:hover,
+.ticket-form button:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+    box-shadow: 0 0 32px rgba(232, 0, 61, 0.55);
+}
+
+/* Ghost / outline button variant */
+.secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(240, 237, 232, 0.25);
+    box-shadow: none;
+}
+
+.secondary:hover {
+    border-color: var(--red);
+    box-shadow: none !important;
+}
+
+/* Hamburger icon label — hidden on desktop, shown on mobile via media query */
+.hamburger {
+    display: none;
+}
+
+
+/* =========================================
+   5. HERO
+   Two-column CSS Grid: text left, card right.
+   Background image + overlays are applied
+   via ::before and .hero-overlay so they
+   sit behind the content without extra markup.
+   ========================================= */
+.hero {
+    min-height: 680px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    align-items: center;
+    gap: 32px;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 80px 45px;
+}
+
+/* Hero background image with dark-to-transparent gradient left overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 40px 20px;
+    border-radius: var(--radius);
+    background:
+        linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.15) 100%),
+        url('/assets/img/hero-bg.jpg') center / cover no-repeat;
+    z-index: -2;
+    box-shadow: var(--shadow);
+}
+
+/* Red radial glow in the upper-right of the hero */
+.hero-overlay {
+    position: absolute;
+    inset: 40px 20px;
+    border-radius: var(--radius);
+    background: radial-gradient(circle at 70% 20%, rgba(232, 0, 61, 0.12), transparent 32%);
+    z-index: -1;
+}
+
+/* Small pulsing red dot — decorative accent */
+.hero-spark {
+    position: absolute;
+    top: 12%;
+    left: 38%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 24px 8px rgba(232, 0, 61, 0.6);
+    z-index: 1;
+    pointer-events: none;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 24px 8px rgba(232, 0, 61, 0.6); }
+    50% { transform: scale(1.4); box-shadow: 0 0 40px 14px rgba(232, 0, 61, 0.3); }
+}
+
+/* display: contents makes this wrapper transparent to the grid —
+   its children (.hero-text, .hero-right) participate in the grid directly */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: contents;
+}
+
+/* Left grid column */
+.hero-text {
+    max-width: 540px;
+}
+
+/* Small label above the heading */
+.eyebrow {
+    color: var(--red);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-body);
+}
+
+/* Shared heading line-height */
+h1,
+h2,
+h3 {
+    line-height: 1.0;
+}
+
+/* Hero headline — fluid size between 4rem and 6.5rem */
+h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(4rem, 6vw, 6.5rem);
+    max-width: 720px;
+    margin: 12px 0;
+    text-transform: uppercase;
+    color: var(--text);
+    letter-spacing: -1px;
+}
+
+.hero-desc {
+    color: #9a9088;
+    font-size: 0.9rem;
+    max-width: 46ch;
+    margin: 14px 0;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    margin-top: 28px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+/* Right grid column */
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-self: end;
+}
+
+/* Base card style shared by all hero cards */
+.hero-card {
+    align-self: end;
+    background: rgba(12, 12, 12, 0.85);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    backdrop-filter: blur(14px);
+}
+
+/* Badge card starts hidden; JS adds .badge-visible to trigger fade-in */
+#badgeCard {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#badgeCard.badge-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Red left border accent on the "Now Playing" card */
+.badge-card {
+    background: rgba(12, 8, 8, 0.9);
+    border-left: 3px solid var(--red);
+}
+
+/* "NOW PLAYING" small label */
+.card-label {
+    color: var(--cyan);
+    font-weight: 500;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+}
+
+.badge-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+}
+
+.badge-card p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+
+/* =========================================
+   6. GENERAL SECTIONS & TABLES
+   ========================================= */
+
+/* Shared padding and max-width for all content sections */
+.section {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 70px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Shared heading style used across section titles and the tickets CTA */
+.section-title h2,
+.about-content h2,
+.tickets h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2.6rem, 5vw, 4.5rem);
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+/* Table wrapper enables horizontal scroll on small screens */
+.table-wrapper {
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    -webkit-overflow-scrolling: touch; /* Smooth momentum scroll on iOS */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px; /* Prevents columns from collapsing too narrow */
+}
+
+th,
+td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    color: var(--red);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    font-family: var(--font-body);
+}
+
+/* Subtle red tint on row hover */
+tbody tr:hover {
+    background: rgba(232, 0, 61, 0.06);
+}
+
+
+/* =========================================
+   7. ABOUT
+   Flex row: image on the left, text on the right.
+   ========================================= */
+.about-section {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+}
+
+/* Image container — uses position: relative so the inner img
+   can be absolutely positioned to fill the container */
+.about-image {
+    flex: 1;
+    min-height: 360px;
+    border-radius: var(--radius);
+    background-color: #1a1010;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    inset: 0;
+    display: block;
+}
+
+.about-content {
+    flex: 1;
+}
+
+.about-content p {
+    color: var(--muted);
+    margin: 14px 0;
+    font-size: 0.88rem;
+}
+
+/* Bullet-point highlights grid */
+.experience-list {
+    margin-top: 18px;
+    display: grid;
+    gap: 10px;
+    list-style-position: inside;
+    color: #d0c8c0;
+}
+
+.experience-list li {
+    font-size: 0.85rem;
+}
+
+
+/* =========================================
+   8. DISCOGRAPHY — CSS-ONLY FLIP CARDS
+   Each .zone-card has a .zone-front and a
+   .zone-back face. perspective on the parent
+   creates the 3-D space. On hover the front
+   rotates to -180deg and the back from 180deg
+   to 0, creating the flip illusion.
+   backface-visibility: hidden hides the
+   reverse face while it is turned away.
+   ========================================= */
+.zones-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+}
+
+.zone-card {
+    perspective: 150rem;
+    -moz-perspective: 150rem;
+    position: relative;
+    height: 220px;
+}
+
+/* Both faces share the same size and flip transition */
+.zone-front,
+.zone-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transition: all 0.8s ease;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+/* Front face — dark surface with red border */
+.zone-front {
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.zone-front span {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.zone-front h3 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+}
+
+.zone-front p {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* Back face — starts flipped 180deg, shows album art background */
+.zone-back {
+    transform: rotateY(180deg);
+    background-size: cover;
+    background-position: center;
+    background-color: #1a0808;
+    padding: 0;
+}
+
+/* Dark gradient over the album art so text stays readable */
+.zone-back-content {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+}
+
+/* Each album has its own cover image on the back face */
+.album-1 { background-image: url('/assets/img/guitar-cover.jpg'); }
+.album-2 { background-image: url('../assets/img/album-frequency.jpg'); }
+.album-3 { background-image: url('../assets/img/album-live.jpg'); }
+.album-4 { background-image: url('../assets/img/album-static.jpg'); }
+
+.zone-back-content h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--text);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+}
+
+.zone-back-content p {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Hover triggers the flip: front rotates away, back rotates into view */
+.zone-card:hover .zone-front {
+    transform: rotateY(-180deg);
+}
+
+.zone-card:hover .zone-back {
+    transform: rotateY(0);
+}
+
+
+/* =========================================
+   9. GALLERY
+   Asymmetric CSS Grid:
+     - .gallery-card--large spans 2 rows
+     - .gallery-card--wide spans 2 columns
+   Images are slightly desaturated by default
+   and reveal full colour on hover.
+   ========================================= */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 0.75rem;
+}
+
+.gallery-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform var(--transition);
+}
+
+.gallery-card:hover {
+    transform: scale(1.01);
+}
+
+/* Large card — occupies 2 rows in the grid */
+.gallery-card--large {
+    grid-row: span 2;
+}
+
+/* Wide card — occupies 2 columns in the grid */
+.gallery-card--wide {
+    grid-column: span 2;
+}
+
+/* Inner wrapper needed so the label sits outside the overflow:hidden area */
+.gallery-card-inner {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius) var(--radius) 0 0;
+    min-height: 180px;
+    background: #111;
+}
+
+.gallery-card--large .gallery-card-inner {
+    min-height: 340px;
+}
+
+.gallery-card--wide .gallery-card-inner {
+    min-height: 150px;
+}
+
+.gallery-card-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    inset: 0;
+    display: block;
+    transition: transform 0.4s ease;
+    filter: grayscale(20%); /* Slight desaturation at rest */
+}
+
+/* On hover: zoom in slightly and reveal full colour */
+.gallery-card:hover .gallery-card-inner img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+/* Caption label below each image with a red top border accent */
+.gallery-label {
+    background: #111;
+    border-top: 2px solid var(--red);
+    padding: 0.55rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+
+/* =========================================
+   10. VIDEO
+   Responsive iframe container using
+   aspect-ratio so height adjusts automatically
+   as the container width changes.
+   ========================================= */
+.video-section {
+    text-align: center;
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    max-width: 700px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+/* aspect-ratio replaces the fixed height so the embed scales with its container */
+.video-container iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+    height: auto;
+}
+
+.video-description {
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 55ch;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   11. MERCH / CONTACT CTA
+   Centred card with a red gradient background,
+   email input, and subscribe button.
+   ========================================= */
+.tickets {
+    background:
+        linear-gradient(135deg, rgba(232, 0, 61, 0.15) 0%, rgba(8, 8, 8, 1) 60%),
+        #0c0c0c;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-width: 720px;
+    margin: 0 auto 80px;
+    padding: 3.5rem 2rem;
+    text-align: center;
+}
+
+.tickets h2 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+.tickets p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin: 0.75rem 0 2rem;
+    line-height: 1.65;
+}
+
+/* Flex row on desktop; stacks to column on mobile */
+.ticket-form {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.ticket-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color var(--transition);
+}
+
+.ticket-form input::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.ticket-form input:focus {
+    border-color: var(--red);
+}
+
+
+/* =========================================
+   12. SPONSORS
+   Flex row of logo cards. Images are
+   greyscale and dimmed by default; hover
+   restores colour and lifts the card.
+   ========================================= */
+.sponsors {
+    background: var(--bg);
+    padding-block: 4rem;
+}
+
+.sponsors-title {
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.sponsor-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+    max-width: 60ch;
+    margin-inline: auto;
+}
+
+.sponsors-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    align-items: stretch;
+    margin-top: 1.5rem;
+}
+
+.sponsor-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 140px;
+    padding: 1.25rem 1.75rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.sponsor-card:hover {
+    border-color: rgba(232, 0, 61, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Fixed-height wrapper keeps all logo images vertically aligned */
+.sponsor-logo {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Greyscale + lighten blend mode so logos work on the dark background */
+.sponsor-logo img {
+    max-height: 44px;
+    max-width: 120px;
+    object-fit: contain;
+    mix-blend-mode: lighten;
+    filter: grayscale(1) brightness(1.4);
+    opacity: 0.7;
+    transition: filter var(--transition), opacity var(--transition);
+}
+
+.sponsor-card:hover .sponsor-logo img {
+    filter: grayscale(0) brightness(1.2);
+    opacity: 1;
+}
+
+.sponsor-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    transition: color var(--transition);
+}
+
+.sponsor-card:hover .sponsor-name {
+    color: var(--red);
+}
+
+
+/* =========================================
+   13. FOOTER
+   Four-column grid on desktop; collapses on
+   tablet and mobile via media queries below.
+   ========================================= */
+.site-footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 3rem 20px;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 2rem;
+    max-width: var(--max-w);
+    margin: 0 auto;
+}
+
+.footer-section h5 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--red);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.footer-section h5 + p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.footer-section h6 {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+}
+
+.contact-list li {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+}
+
+.contact-list a {
+    transition: color var(--transition);
+}
+
+.contact-list a:hover {
+    color: var(--red);
+}
+
+/* Social icon row */
+.social-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Icon button — square with border and padding */
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem;
+    transition: border-color var(--transition);
+}
+
+.social-links a:hover {
+    border-color: var(--red);
+}
+
+.social-links a img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+}
+
+/* CSS filter trick to colour the SVG icon red on hover */
+.social-links a:hover img {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(100%) saturate(5000%) hue-rotate(340deg);
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    font-size: 0.82rem;
+    color: var(--muted);
+    transition: color var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+/* Copyright bar — spans all columns */
+.footer-bottom {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+
+/* =========================================
+   14. RESPONSIVE — TABLET (max-width: 1024px)
+   ========================================= */
+@media (max-width: 1024px) {
+
+    /* Hero collapses to single column; right card is hidden */
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 35px;
+        min-height: auto;
+    }
+
+    .hero-right {
+        display: none;
+    }
+
+    /* Move spark to the top-right corner on smaller screens */
+    .hero-spark {
+        top: 6%;
+        left: auto;
+        right: 5%;
+    }
+
+    .hero-waves {
+        display: none;
+    }
+
+    .about-section {
+        flex-direction: column;
+    }
+
+    .about-image {
+        min-height: 240px;
+        width: 100%;
+    }
+
+    /* Albums grid: 2 columns instead of 4 */
+    .zones-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Gallery: 2 columns instead of 3 */
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Large card loses its row-span and takes full width */
+    .gallery-card--large {
+        grid-row: span 1;
+        grid-column: span 2;
+    }
+
+    .gallery-card--wide {
+        grid-column: span 2;
+    }
+
+    /* Footer collapses to 2 columns */
+    .site-footer {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* =========================================
+   15. RESPONSIVE — MOBILE (max-width: 735px)
+   ========================================= */
+@media (max-width: 735px) {
+
+    /* Show the hamburger icon on mobile */
+    .hamburger {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        cursor: pointer;
+        font-size: 1.6rem;
+        color: var(--red);
+        padding: 0.3rem 0.5rem;
+        background: none;
+        border: none;
+        z-index: 5;
+        order: 3; /* Pushes hamburger to the far right of the flex row */
+    }
+
+    .brand {
+        order: 1;
+    }
+
+    /* Hide the desktop CTA button in the nav */
+    .nav-cta {
+        display: none;
+    }
+
+    /* Nav links become a full-width dropdown below the header */
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(8, 8, 8, 0.98);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        padding: 0.5rem 0;
+        z-index: 3;
+    }
+
+    /* When the checkbox is checked, show the dropdown */
+    .menu-toggle:checked ~ .nav-links {
+        display: flex;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+        color: var(--text);
+        border-bottom: 1px solid var(--border);
+        transition: background var(--transition), color var(--transition);
+    }
+
+    .nav-links a:hover {
+        background: var(--surface);
+        color: var(--red);
+    }
+
+    /* Hero adjustments for small screens */
+    .hero {
+        padding: 40px 16px;
+    }
+
+    .hero::before {
+        inset: 20px 12px;
+    }
+
+    .hero-overlay {
+        inset: 20px 12px;
+    }
+
+    .hero-spark {
+        top: 4%;
+        left: auto;
+        right: 4%;
+        width: 8px;
+        height: 8px;
+    }
+
+    .hero-waves {
+        display: none;
+    }
+
+    /* Fluid headline size for narrow viewports */
+    h1 {
+        font-size: clamp(3rem, 12vw, 4.5rem);
+    }
+
+    /* Table becomes horizontally scrollable on mobile */
+    .table-wrapper {
+        overflow-x: auto;
+        border-radius: var(--radius);
+        padding: 0;
+    }
+
+    table {
+        min-width: 650px;
+    }
+
+    .section {
+        padding: 50px 16px;
+    }
+
+    .section-title h2,
+    .about-content h2 {
+        font-size: clamp(2.2rem, 8vw, 3rem);
+    }
+
+    /* Albums grid stays 2 columns on mobile with tighter gap */
+    .zones-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    /* Gallery becomes single column on mobile */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-card--large,
+    .gallery-card--wide {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    /* Subscription form stacks to a column */
+    .ticket-form {
+        flex-direction: column;
+    }
+
+    .ticket-form input,
+    .ticket-form button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .tickets {
+        margin: 0 16px 60px;
+    }
+
+    /* Footer collapses to a single column */
+    .site-footer {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
