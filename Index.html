@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta name="description" content="Shattered riffs rock band landing page">
+  <meta name="keywords" content="Rock Band, California, Rock the night tour">
+  <meta name="author" content="Vanessa F">
+  <title>ROCK-BAND</title>
+
+  <!-- Google Fonts: Barlow Condensed for display headings, DM Mono for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" >
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin >
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" >
+
+  <link rel="stylesheet" href="css/styles.css" >
+</head>
+<body>
+
+  <!-- =========================================
+       HEADER — CSS-only burger menu driven by a
+       hidden checkbox (no JavaScript required).
+       The <label> toggles the checkbox; the
+       sibling selector in CSS shows/hides .nav-links.
+       ========================================= -->
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+
+      <!-- Hidden checkbox that controls the mobile menu state -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true" >
+
+      <!-- Brand / logo link — scrolls back to the hero section -->
+      <a href="#hero" class="brand">
+        <!-- Brand icon displayed next to the band name -->
+        <img src="assets/icons/logo.ico" alt="Logo" class="brand-icon">
+        <span>SHATTERED</span> RIFFS
+      </a>
+
+      <!-- Hamburger icon — visible on mobile only (CSS controls display) -->
+      <label for="menu-toggle" class="hamburger" >&#9776;</label>
+
+      <!-- Primary navigation links -->
+      <ul class="nav-links">
+        <li><a href="#tour">Events</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#music">Music</a></li>
+        <li><a href="#gallery">Media</a></li>
+        <li><a href="#video">Video</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- =========================================
+         HERO SECTION
+         Two-column layout: band headline text on
+         the left, animated badge card on the right.
+         The background image and overlays are
+         applied via CSS pseudo-elements.
+         ========================================= -->
+    <section class="hero" id="hero">
+
+      <!-- Radial red gradient overlay (decorative) -->
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <!-- Pulsing red dot — purely decorative accent -->
+      <div class="hero-spark" aria-hidden="true"></div>
+
+      <div class="hero-content">
+
+        <!-- Left column: headline copy and CTA buttons -->
+        <div class="hero-text">
+          <p class="eyebrow">2026 · Rock the night Tour</p>
+          <h1>
+            Rock.<br>
+            The night.<br>
+            Upcoming.<br>
+            Tour.
+          </h1>
+          <p class="hero-desc">Four cities. One summer. The most intense live rock experience you'll witness this decade.</p>
+          <div class="hero-actions">
+            <a href="#tour" class="btn">View Dates</a>
+            <a href="#music" class="btn secondary">Listen Now</a>
+          </div>
+        </div>
+
+        <!-- Right column: "Now Playing" card — fades in via JS after load -->
+        <div class="hero-right">
+          <div class="hero-card badge-card" id="badgeCard">
+            <p class="card-label">Now Playing</p>
+            <h2>Dead Signal</h2>
+            <p>Latest single from the upcoming album "Static Black" — out July 2026.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================
+         TOUR DATES SECTION
+         Displays upcoming show dates in a
+         responsive scrollable table.
+         ========================================= -->
+    <section class="section dates-section" id="tour">
+      <div class="section-title">
+        <p class="eyebrow">Rock the night Tour</p>
+        <h2>Tour Dates</h2>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>City</th>
+              <th>Venue</th>
+              <th>Special Guest</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>08 Jul</td>
+              <td>Mexico City</td>
+              <td>Foro Sol · 9:00 PM</td>
+              <td>The Static Wolves</td>
+            </tr>
+            <tr>
+              <td>15 Jul</td>
+              <td>Buenos Aires</td>
+              <td>Estadio Obras · 8:30 PM</td>
+              <td>Fractured Spine</td>
+            </tr>
+            <tr>
+              <td>22 Jul</td>
+              <td>Bogotá</td>
+              <td>Movistar Arena · 9:00 PM</td>
+              <td>Neon Plague</td>
+            </tr>
+            <tr>
+              <td>29 Jul</td>
+              <td>Santiago</td>
+              <td>Movistar Arena · 8:00 PM</td>
+              <td>The Collapse</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =========================================
+         ABOUT / BAND SECTION
+         Flex layout: band photo on the left,
+         bio text and bullet highlights on the right.
+         ========================================= -->
+    <section class="section about-section" id="about">
+      <div class="about-image">
+        <img src="assets/img/band.jpg" alt="Void Circuit band" >
+      </div>
+      <div class="about-content">
+        <p class="eyebrow">About The Band</p>
+        <h2>Noise born from silence and fury.</h2>
+        <p>Shattered Riffs formed in 2020 in a basement in Los Angeles. What started as a noise experiment became one of the most visceral live acts of the decade hardcore, industrial metal, and ambient electronics.</p>
+        <ul class="experience-list">
+          <li>• 3 studio albums, 1 live record</li>
+          <li>• 200+ shows across 18 countries</li>
+          <li>• Headline slots at Download, Knotfest, Hellfest</li>
+          <li>• New album "Static Black" — July 2026</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- =========================================
+         DISCOGRAPHY SECTION
+         CSS-only flip cards — each card shows the
+         album title on the front face and an album
+         cover image on the back face on hover.
+         ========================================= -->
+    <section class="section zones-section" id="music">
+      <div class="section-title">
+        <p class="eyebrow">Discography</p>
+        <h2>The Albums</h2>
+      </div>
+      <div class="zones-grid">
+
+        <!-- Album 1 -->
+        <article class="zone-card">
+          <div class="zone-front">
+            <span>💿</span>
+            <h3>Collapse</h3>
+            <p>2018 debut. Raw, chaotic, uncompromising.</p>
+          </div>
+          <div class="zone-back ">
+            <div class="zone-back-content album-1">
+              <h3>Collapse</h3>
+              <p>2018 · 10 tracks · 44 min</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Album 2 -->
+        <article class="zone-card">
+          <div class="zone-front">
+            <span>🔊</span>
+            <h3>Frequency</h3>
+            <p>2020. Industrial. Distorted. Relentless.</p>
+          </div>
+          <div class="zone-back album-2">
+            <div class="zone-back-content">
+              <h3>Frequency</h3>
+              <p>2020 · 12 tracks · 51 min</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Album 3 — live record -->
+        <article class="zone-card">
+          <div class="zone-front">
+            <span>⚡</span>
+            <h3>Void Live</h3>
+            <p>2023. 90 minutes of pure electricity.</p>
+          </div>
+          <div class="zone-back album-3">
+            <div class="zone-back-content">
+              <h3>Void Live</h3>
+              <p>2023 · Live · 90 min</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Album 4 — upcoming release -->
+        <article class="zone-card">
+          <div class="zone-front">
+            <span>📡</span>
+            <h3>Static Black</h3>
+            <p>2026. The new era. Pre-order now.</p>
+          </div>
+          <div class="zone-back album-4">
+            <div class="zone-back-content">
+              <h3>Static Black</h3>
+              <p>2026 · Out July 18</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =========================================
+         GALLERY SECTION
+         CSS Grid layout with one large card,
+         two standard cards, and one wide card.
+         Images reveal full colour on hover.
+         ========================================= -->
+    <section class="section gallery-section" id="gallery">
+      <div class="section-title">
+        <p class="eyebrow">On Stage</p>
+        <h2>Gallery</h2>
+      </div>
+      <div class="gallery-grid">
+
+        <!-- Large card — spans 2 rows -->
+        <div class="gallery-card gallery-card--large">
+          <div class="gallery-card-inner">
+            <img src="assets/img/concert-main.jpg" alt="Main Stage" >
+          </div>
+          <p class="gallery-label">World Tour 2025</p>
+        </div>
+
+        <!-- Standard cards -->
+        <div class="gallery-card">
+          <div class="gallery-card-inner">
+            <img src="assets/img/guitarist.jpg" alt="Guitarist" >
+          </div>
+          <p class="gallery-label">Lead Guitar</p>
+        </div>
+
+        <div class="gallery-card">
+          <div class="gallery-card-inner">
+            <img src="assets/img/crowd.jpg" alt="Crowd" >
+          </div>
+          <p class="gallery-label">The Crowd</p>
+        </div>
+
+        <!-- Wide card — spans 2 columns -->
+        <div class="gallery-card gallery-card--wide">
+          <div class="gallery-card-inner">
+            <img src="assets/img/stage.jpg" alt="Stage Lights" >
+          </div>
+          <p class="gallery-label">Stage Production</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================
+         VIDEO SECTION
+         Embeds the official YouTube music video.
+         The iframe uses aspect-ratio in CSS so it
+         scales responsively without fixed height.
+         ========================================= -->
+    <section class="section video-section" id="video">
+      <div class="section-title">
+        <p class="eyebrow">Official Video</p>
+        <h2>Dead Signal</h2>
+      </div>
+      <div class="video-container">
+        <iframe
+         width="560"
+         height="315" 
+         src="https://www.youtube.com/embed/uPMDPiNG4TE?si=sa1nNN90ggDmIdDt"
+         title="YouTube video player"
+         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+         referrerpolicy="strict-origin-when-cross-origin" 
+         allowfullscreen>
+        </iframe>
+      </div>
+      <p class="video-description">The official video for "Dead Signal," the lead single from the upcoming album Static Black. Directed by Mara Voss. Shot in Detroit, June 2026.</p>
+    </section>
+
+    <!-- =========================================
+         CONTACT / NEWSLETTER SECTION
+         Email subscription form so fans can receive
+         merch drops, pre-sale codes, and tour news.
+         ========================================= -->
+    <section class="tickets" id="contact">
+      <h2>Join the Circuit.</h2>
+      <p>Subscribe for exclusive merch drops, pre-sale access, and behind-the-scenes content from the road.</p>
+      <form class="ticket-form" action="#" method="post">
+        <label class="sr-only" for="email">Email</label>
+        <input id="email" type="email" placeholder="your@email.com" required >
+        <button type="submit">Subscribe</button>
+      </form>
+    </section>
+
+    <!-- =========================================
+         SPONSORS SECTION
+         Logos are rendered greyscale by default
+         and reveal full colour on hover.
+         Images that fail to load are hidden via
+         the onerror attribute.
+         ========================================= -->
+    <section class="section sponsors" id="sponsors" aria-label="Our sponsors">
+      <div class="container">
+        <h2 class="section-title sponsors-title">Partners & Sponsors</h2>
+        <p class="sponsor-subtitle">The brands that make the noise possible</p>
+        <div class="sponsors-grid">
+
+          <div class="sponsor-card">
+            <div class="sponsor-logo">
+              <img src="assets/icons/sponsor-avianca.png" alt="Bavaria" loading="lazy" onerror="this.style.display='none'" >
+            </div>
+            <span class="sponsor-name">Bavaria</span>
+          </div>
+
+          <div class="sponsor-card">
+            <div class="sponsor-logo">
+              <img src="assets/icons/sponsor-bancolombia.jpg" alt="Bancolombia" loading="lazy" onerror="this.style.display='none'" >
+            </div>
+            <span class="sponsor-name">Bancolombia</span>
+          </div>
+
+          <div class="sponsor-card">
+            <div class="sponsor-logo">
+              <img src="assets/icons/sponsor-avianca.png" alt="Avianca" loading="lazy" onerror="this.style.display='none'" >
+            </div>
+            <span class="sponsor-name">Avianca</span>
+          </div>
+
+          <div class="sponsor-card">
+            <div class="sponsor-logo">
+              <img src="assets/icons/sponsor-exito.png" alt="Exito" loading="lazy" onerror="this.style.display='none'" >
+            </div>
+            <span class="sponsor-name">Exito</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================
+       FOOTER
+       Four-column grid on desktop (brand info,
+       contact details, social links, quick nav).
+       Collapses to a single column on mobile.
+       ========================================= -->
+  <footer class="site-footer">
+    <div class="footer-section">
+      <h3>SHATTERED RIFFS</h3>
+      <p>Rock band · Rock the night Tour 2026</p>
+    </div>
+
+    <div class="footer-section">
+      <h4>Contact</h4>
+      <ul class="contact-list">
+        <li><a href="tel:+12025550147">📞 +1 202 123 4567</a></li>
+        <li><a href="mailto:management@voidcircuit.com">✉️ management@shatteredriffs.com</a></li>
+        <li>📍 Los Angeles, California</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <!-- Social icon links — SVG icons stored in assets/icons/ -->
+      <div class="social-links">
+        <a href="https://instagram.com/voidcircuit" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/icons/instagram.svg" alt="Instagram" >
+        </a>
+        <a href="https://facebook.com/voidcircuit" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/icons/facebook.svg" alt="Facebook" >
+        </a>
+        <a href="https://twitter.com/voidcircuit" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/icons/twitter.svg" alt="Twitter" >
+        </a>
+        <a href="https://youtube.com/voidcircuit" target="_blank" rel="noopener noreferrer">
+          <img src="/assets/icons/youtube.svg" alt="Youtube">
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-section">
+      <h5>Quick Links</h5>
+      <ul class="footer-links">
+        <li><a href="#tour">Tour Dates</a></li>
+        <li><a href="#about">The Band</a></li>
+        <li><a href="#gallery">Media</a></li>
+        <li><a href="#music">Music</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Shattered Riffs. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript — badge card animation + burger menu close on nav click -->
+  <script src="script.js"></script>
